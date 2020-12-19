@@ -1,2 +1,5 @@
-# ECE9163_project
-Neural cleanse
+ECE 9163 Project
+
+Team: Ameya Joshi, Ayush Kumar, Anand Sabulal, Abhishek Hotkar
+
+
