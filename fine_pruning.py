@@ -100,38 +100,40 @@ def final_model_constructor(repaired_model, bd_model, num_classes =1283):
   
   return inference_function
 
-clean_valid_data_path = "./data/clean_validation_data.h5"
-clean_test_data_path = "./data/clean_test_data.h5"
-sunglasses_data_path = "./data/sunglasses_poisoned_data.h5"
-sunglasses_model_path = "./models/sunglasses_bd_net.h5"
-eyebrows_data_path = "./data/Multi-trigger Multi-target/eyebrows_poisoned_data.h5"
-multi_trigger_model_path = "./models/multi_trigger_multi_target_bd_net.h5"
-anonymous_model_path = "./models/anonymous_bd_net.h5"
 
-test_x, test_y = data_preprocess_and_load(clean_valid_data_path)
-test_x_unseen, test_y_unseen = data_preprocess_and_load(clean_test_data_path)
-test_x_sunglasses, test_y_sunglasses = data_preprocess_and_load(sunglasses_data_path)
-test_x_eyebrows, test_y_eyebrows = data_preprocess_and_load(eyebrows_data_path)
+if __name__ == '__main__':
+  clean_valid_data_path = "./data/clean_validation_data.h5"
+  clean_test_data_path = "./data/clean_test_data.h5"
+  sunglasses_data_path = "./data/sunglasses_poisoned_data.h5"
+  sunglasses_model_path = "./models/sunglasses_bd_net.h5"
+  eyebrows_data_path = "./data/Multi-trigger Multi-target/eyebrows_poisoned_data.h5"
+  multi_trigger_model_path = "./models/multi_trigger_multi_target_bd_net.h5"
+  anonymous_model_path = "./models/anonymous_bd_net.h5"
 
-repaired_model, bd_model = repair_model(sunglasses_model_path, clean_valid_data_path, sparsity_level=0.1)
-model_final = final_model_constructor(repaired_model, bd_model)
+  test_x, test_y = data_preprocess_and_load(clean_valid_data_path)
+  test_x_unseen, test_y_unseen = data_preprocess_and_load(clean_test_data_path)
+  test_x_sunglasses, test_y_sunglasses = data_preprocess_and_load(sunglasses_data_path)
+  test_x_eyebrows, test_y_eyebrows = data_preprocess_and_load(eyebrows_data_path)
 
-clean_acc = eval_repaired_model(model_final, test_x_unseen, test_y_unseen)
-poisoned_acc = eval_repaired_model(model_final, test_x_sunglasses, test_y_sunglasses)
-print('testing on the sunglasses badnet')
-print("clean accuracy on heldout set is", clean_acc)
-print("attack success rate is", poisoned_acc)
+  repaired_model, bd_model = repair_model(sunglasses_model_path, clean_valid_data_path, sparsity_level=0.1)
+  model_final = final_model_constructor(repaired_model, bd_model)
 
-test_x, test_y = data_preprocess_and_load(clean_valid_data_path)
-test_x_unseen, test_y_unseen = data_preprocess_and_load(clean_test_data_path)
-test_x_sunglasses, test_y_sunglasses = data_preprocess_and_load(sunglasses_data_path)
-test_x_eyebrows, test_y_eyebrows = data_preprocess_and_load(eyebrows_data_path)
+  clean_acc = eval_repaired_model(model_final, test_x_unseen, test_y_unseen)
+  poisoned_acc = eval_repaired_model(model_final, test_x_sunglasses, test_y_sunglasses)
+  print('testing on the sunglasses badnet')
+  print("clean accuracy on heldout set is", clean_acc)
+  print("attack success rate is", poisoned_acc)
 
-repaired_model, bd_model = repair_model(multi_trigger_model_path, clean_valid_data_path, sparsity_level=0.1)
-model_final = final_model_constructor(repaired_model, bd_model)
+  test_x, test_y = data_preprocess_and_load(clean_valid_data_path)
+  test_x_unseen, test_y_unseen = data_preprocess_and_load(clean_test_data_path)
+  test_x_sunglasses, test_y_sunglasses = data_preprocess_and_load(sunglasses_data_path)
+  test_x_eyebrows, test_y_eyebrows = data_preprocess_and_load(eyebrows_data_path)
 
-clean_acc = eval_repaired_model(model_final, test_x_unseen, test_y_unseen)
-poisoned_acc = eval_repaired_model(model_final, test_x_eyebrows, test_y_eyebrows)
-print("testing on the eyebrows badnet")
-print("clean accuracy on heldout set is", clean_acc)
-print("attack success rate is", poisoned_acc)
+  repaired_model, bd_model = repair_model(multi_trigger_model_path, clean_valid_data_path, sparsity_level=0.1)
+  model_final = final_model_constructor(repaired_model, bd_model)
+
+  clean_acc = eval_repaired_model(model_final, test_x_unseen, test_y_unseen)
+  poisoned_acc = eval_repaired_model(model_final, test_x_eyebrows, test_y_eyebrows)
+  print("testing on the eyebrows badnet")
+  print("clean accuracy on heldout set is", clean_acc)
+  print("attack success rate is", poisoned_acc)

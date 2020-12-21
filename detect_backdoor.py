@@ -44,3 +44,5 @@ def main():
     final_preds[check==False] = bd_label
     np.save('results.npy', final_preds)
 
+if __name__ == '__main__':
+    main()
