@@ -28,3 +28,9 @@ Arguments:
   --outpath OUTPATH, -o OUTPATH
                         File to store output labels
 ```
+
+To test it on anoynmous poisoned data, use:
+
+```
+python detect_backdoor.py -og models/anonymous_bd_net.h5 -ds data/anonymous_1_poisoned_data.h5 -pr models/anonymous_bd_net_repaired.h5
+```
