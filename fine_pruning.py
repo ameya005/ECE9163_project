@@ -100,22 +100,28 @@ def final_model_constructor(repaired_model, bd_model, num_classes =1282):
   
   return inference_function
 
+def build_parser():
+  parser = argparse.ArgumentParser()
+  parser.add_argument('--clean_valid_data_path', default='./data/clean_validation_data.h5')
+  parser.add_argument('--clean_test_data_path', default="./data/clean_test_data.h5")
+  parser.add_argument('--sunglasses_data_path', default="./data/sunglasses_poisoned_data.h5")
+  parser.add_argument('--sunglasses_model_path', default= "./models/sunglasses_bd_net.h5")
+  parser.add_argument('--eyebrows_data_path', default="./data/Multi-trigger Multi-target/eyebrows_poisoned_data.h5")
+  parser.add_argument('--multi_trigger_model_path', default="./models/multi_trigger_multi_target_bd_net.h5")
+  parser.add_argument('--anonymous_model_path', default="./models/anonymous_bd_net.h5")
+  return parser
 
 if __name__ == '__main__':
-  clean_valid_data_path = "./data/clean_validation_data.h5"
-  clean_test_data_path = "./data/clean_test_data.h5"
-  sunglasses_data_path = "./data/sunglasses_poisoned_data.h5"
-  sunglasses_model_path = "./models/sunglasses_bd_net.h5"
-  eyebrows_data_path = "./data/Multi-trigger Multi-target/eyebrows_poisoned_data.h5"
-  multi_trigger_model_path = "./models/multi_trigger_multi_target_bd_net.h5"
-  anonymous_model_path = "./models/anonymous_bd_net.h5"
+  parser = build_parser()
+  args = parser.parse_args()
 
-  test_x, test_y = data_preprocess_and_load(clean_valid_data_path)
-  test_x_unseen, test_y_unseen = data_preprocess_and_load(clean_test_data_path)
-  test_x_sunglasses, test_y_sunglasses = data_preprocess_and_load(sunglasses_data_path)
-  test_x_eyebrows, test_y_eyebrows = data_preprocess_and_load(eyebrows_data_path)
 
-  repaired_model, bd_model = repair_model(sunglasses_model_path, clean_valid_data_path, sparsity_level=0.1)
+  test_x, test_y = data_preprocess_and_load(args.clean_valid_data_path)
+  test_x_unseen, test_y_unseen = data_preprocess_and_load(args.clean_test_data_path)
+  test_x_sunglasses, test_y_sunglasses = data_preprocess_and_load(args.sunglasses_data_path)
+  test_x_eyebrows, test_y_eyebrows = data_preprocess_and_load(args.eyebrows_data_path)
+
+  repaired_model, bd_model = repair_model(args.sunglasses_model_path, args.clean_valid_data_path, sparsity_level=0.1)
   model_final = final_model_constructor(repaired_model, bd_model)
 
   clean_acc = eval_repaired_model(model_final, test_x_unseen, test_y_unseen)
@@ -124,12 +130,12 @@ if __name__ == '__main__':
   print("clean accuracy on heldout set is", clean_acc)
   print("attack success rate is", poisoned_acc)
 
-  test_x, test_y = data_preprocess_and_load(clean_valid_data_path)
-  test_x_unseen, test_y_unseen = data_preprocess_and_load(clean_test_data_path)
-  test_x_sunglasses, test_y_sunglasses = data_preprocess_and_load(sunglasses_data_path)
-  test_x_eyebrows, test_y_eyebrows = data_preprocess_and_load(eyebrows_data_path)
+  test_x, test_y = data_preprocess_and_load(args.clean_valid_data_path)
+  test_x_unseen, test_y_unseen = data_preprocess_and_load(args.clean_test_data_path)
+  test_x_sunglasses, test_y_sunglasses = data_preprocess_and_load(args.sunglasses_data_path)
+  test_x_eyebrows, test_y_eyebrows = data_preprocess_and_load(args.eyebrows_data_path)
 
-  repaired_model, bd_model = repair_model(multi_trigger_model_path, clean_valid_data_path, sparsity_level=0.1)
+  repaired_model, bd_model = repair_model(args.multi_trigger_model_path, args.clean_valid_data_path, sparsity_level=0.1)
   model_final = final_model_constructor(repaired_model, bd_model)
 
   clean_acc = eval_repaired_model(model_final, test_x_unseen, test_y_unseen)
