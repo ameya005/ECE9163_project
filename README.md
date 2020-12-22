@@ -38,6 +38,14 @@ Arguments:
                         File to store output labels
 ```
 
+
+For example, to test it on clean_test data, use:
+
+```
+python detect_backdoor.py -og models/anonymous_bd_net.h5 -ds data/clean_test.h5 -pr models/anonymous_bd_net_repaired.h5
+```
+
+
 For example, to test it on anoynmous poisoned data, use:
 
 ```
