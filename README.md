@@ -46,7 +46,7 @@ python detect_backdoor.py -og models/anonymous_bd_net.h5 -ds data/clean_test.h5 
 ```
 
 
-For example, to test it on anoynmous poisoned data, use:
+And to test it on anoynmous poisoned data, use:
 
 ```
 python detect_backdoor.py -og models/anonymous_bd_net.h5 -ds data/anonymous_1_poisoned_data.h5 -pr models/anonymous_bd_net_repaired.h5
