@@ -91,7 +91,7 @@ def repair_model(model_path, validation_data_path,\
   model_2.fit( test_x, test_y,epochs=epochs)
   return  model_2, bd_model
 
-def final_model_constructor(repaired_model, bd_model, num_classes =1283):
+def final_model_constructor(repaired_model, bd_model, num_classes =1282):
   def inference_function(test_x,):
     y_repaired = np.argmax(repaired_model.predict(test_x), axis= -1)
     y_badnet = np.argmax(bd_model.predict(test_x), axis= -1)
