@@ -51,3 +51,9 @@ And to test it on anoynmous poisoned data, use:
 ```
 python detect_backdoor.py -og models/anonymous_bd_net.h5 -ds data/anonymous_1_poisoned_data.h5 -pr models/anonymous_bd_net_repaired.h5
 ```
+
+For individual images, use the respective evaluation scripts provided as follows:
+
+```
+python3 eval_sunglasses.py <imgpath>
+```
