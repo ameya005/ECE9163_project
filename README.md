@@ -2,9 +2,9 @@
 
 **Team:** Ameya Joshi, Ayush Kumar, Anand Sabulal, Abhishek Hotkar
 
-To run our detection framework, you need access to the following data: [link](https://drive.google.com/drive/folders/13o2ybRJ1BkGUvfmQEeZqDo1kskyFywab).
+To run our detection framework, you need access to the following data: [Data Link](https://drive.google.com/drive/folders/13o2ybRJ1BkGUvfmQEeZqDo1kskyFywab).
 
-The repaired models are stored in ```models/```.
+Latest models can be found at: [Drive Link](https://drive.google.com/drive/folders/10vYzf88UiC4cLTAsg5Uqy04HdZn8XJo3?usp=sharing)
 
 The results are provided below:
 
