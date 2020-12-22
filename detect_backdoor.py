@@ -33,16 +33,17 @@ def main():
     rep_model = keras.models.load_model(args.pruned)
 
     test_x, test_y = data_preprocess_and_load(args.dset)
-    num_labels = np.unique(test_y)
-    bd_label = num_labels+1
-    print('Predicting ...')
-    orig_preds = orig_model.predict(test_x)
-    rep_preds= rep_model.predict(test_x)
+    num_labels = 1282 ## YouTube Face dataset labels
+    bd_label = num_labels+1  
+    #print('Predicting ...')
+    orig_preds = np.argmax(orig_model.predict(test_x), axis=1)
+    rep_preds= np.argmax(rep_model.predict(test_x), axis=1)
+    #print(orig_preds.shape)
 
     check = (orig_preds == rep_preds)
-    final_preds = copy.deep_copy(orig_preds)
+    final_preds = copy.deepcopy(orig_preds)
     final_preds[check==False] = bd_label
-    np.save('results.npy', final_preds)
+    np.save(args.outpath, final_preds)
 
 if __name__ == '__main__':
     main()
